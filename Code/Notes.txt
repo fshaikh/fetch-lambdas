@@ -1,0 +1,44 @@
+
+  Fetches lambdas from all regions along with interesting metadata. Metadata includes:
+       Region, Name, Last Modified, Last Invocation, Memory (MB), Code Size (MB), Timeout(seconds),Runtime, Description
+  Usage:
+       node fetch-lambdas --accessKey= --secretKey= [--csv=lambdas.csv] [--all] [--sort=<column_name>]
+  
+  Outputs:
+       1. Default Console Output:
+       ========================================================================
+       | Region     |     Lambda       |   Last Modified    |  Last Invocation |
+       ========================================================================
+       us-east-1        Name               Today/Yesterday/    Today/Yesterday/
+                                           X days ago          X days ago
+       ...
+       ========================================================================
+       
+       2. CSV Output:
+       When csv flag is provided, will produce a CSV file
+
+    Sort Columns:
+        By default, it will be sorted by region. Specify below columns for sorting based on them
+        last-invocation
+        last-modified
+        memory
+        code-size
+        runtime
+
+   MF
+     Fetches lambdas from all regions along with interesting metadata
+       Use Cases
+           1. Design and setup
+               Setup typescript, aws package, git
+               Design classes/functions
+           2. As a user, I should be able to fetch lambdas for all regions and see basic metadata in console
+           3. As a user, I should be able to fetch lambdas for all regions with last invocation      
+           4. As a user, I should be able to fetch lambdas for all regions and save in CSV
+           5. As a user, I should be able to sort by a chosen column
+
+   Deployment
+
+
+
+
+ 
