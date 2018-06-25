@@ -2,7 +2,34 @@
   Fetches lambdas from all regions along with interesting metadata. Metadata includes:
        Region, Name, Last Modified, Last Invocation, Memory (MB), Code Size (MB), Timeout(seconds),Runtime, Description
   Usage:
-       node fetch-lambdas --accessKey= --secretKey= [--csv=lambdas.csv] [--all] [--sort=<column_name>]
+       fetch-lambdas --accessKey= --secretKey= [--csv=lambdas.csv] [--all] [--sort=<column_name>]
+        User should be able to execute fetch-lambdas from anywhere on the machine.
+
+    NAME
+        fetch-lambdas - Fetches lambdas from all regions along with interesting metadata
+    DESCRIPTION
+        Fetches lambdas from all regions along with interesting metadata.Metadata includes:
+       Region, Name, Last Modified, Last Invocation, Memory (MB), Code Size (MB), Timeout(seconds),Runtime, Description.
+       Sort entries by AWS region if --sort is not specified
+
+       -accessKey
+            API Access Key of the AWS account for which the Lambdas are to be fetched
+        -secretKey
+            Secret Key of the AWS account for which the Lambdas are to be fetched
+        -csv
+            CSV file name which will contain the results. 
+        -all
+            Show all metadata in columns in the console output
+        -sortBy
+            Sort column name. Valid values are:
+                        last-invocation
+                        last-modified
+                        memory
+                        code-size
+                        runtime
+                        name
+                        region
+
   
   Outputs:
        1. Default Console Output:
@@ -24,19 +51,112 @@
         memory
         code-size
         runtime
+        name
+        region
 
    MF
      Fetches lambdas from all regions along with interesting metadata
        Use Cases
            1. Design and setup
-               Setup typescript, aws package, git
-               Design classes/functions
-           2. As a user, I should be able to fetch lambdas for all regions and see basic metadata in console
-           3. As a user, I should be able to fetch lambdas for all regions with last invocation      
-           4. As a user, I should be able to fetch lambdas for all regions and save in CSV
-           5. As a user, I should be able to sort by a chosen column
+               Setup typescript, aws package, git - DONE
+               CLI Changes - DONE
+               Design classes/functions - DONE
+                    
+           3. As a user, I should be able to pass arguments to fetch lambdas and see errors 
+                  Implement Parser to parse CLI args - DONE
+                  Implement Validator to validate CLI args - DONE
+                  Show help - DONE
+                  Show error when accessKey is not provided - DONE
+                  Show error when secretKey is not provided - DONE
+                  Show error when sort has invalid column.
+           4. As a user, I should be able to fetch lambdas for all regions
+           5. As a user, I should be able to fetch lambdas for all regions with last invocation      
+           6. As a user, I should be able to see basic metadata in console
+           7. As a user, I should be able to save in CSV - DONE
+           8. As a user, I should be able to sort by a chosen column
+           9. As a dev, I should be able to publish, update and automate to NPM
+           10. As a dev, I should be able to publish, update and automate to Yarn
 
    Deployment
+
+
+   CLI Changes Notes:
+    Node can be used for building web api/web applications/lambdas/cli. We are aware of how to build the first 3
+   where typically Express and AWS Lambda are used. fetch-lambdas is a Node-based CLI application. So what
+   makes a CLI app in Node. This section describes the requirements.
+    When the user installs the fetch-lambdas package on his/her machine, user can open a command window (cmd,powershell,bash,etc)
+     and just type - fetch-lambdas <args>. There are 2 points worth noting. First is that the user doesn't have to prepend node and second
+     is that user can execute the CLI from any directory. 
+    As a dev, we need to do the following:
+    1. define a "bin" property in package.json pointing to the name of the CLI command and JS file
+    2. File(s) referenced in bin starts with #!/usr/bin/env node, otherwise scripts are started without the node executable
+    3. Then to test it locally, do: npm link. This will do the needful on the developer's machine
+
+    You can see the changes in package.json and fetch-lambdas.js
+    Reference: https://docs.npmjs.com/files/package.json#bin
+
+    Parsing Arguments:
+    We will use commander npm package to validate and parse command line arguments. Commander provides -h help feature by default
+
+    node fetch-lambdas --accessKey=AKIAJZCW2NKVNFWQHLXQ --secretKey=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
+
+
+Packaging and Distribution:
+We will package as npm package and distribute to NPM and Yarn. Should we use scoped package or not has to considered. So what is a scoped package?
+@reversecurrent/fetch-lambdas. Here @reversecurrent is scope. Some reasons for using scoped package: 
+  Private - Want to deploy a private package
+  Grouping - to group several related packages. For example, angular uses this approach where all angular packages are scoped with @angular
+  Namespacing - When package name you want to publish as is already taken. Scope name can be either organization name or package owner 
+
+As a user:
+ Using NPM
+ Option 1 
+   npm install -g fetch-lambdas
+   fetch-lambdas --accessKey= --secretKey= --all --csv=lambdas.csv --sortBy=last_invocation
+
+ Option 2
+   npx fetch-lambdas --accessKey= --secretKey= --all --csv=lambdas.csv --sortBy=last_invocation
+     -- npx is specifically for packages designed to run as CLI app. NPM will download the package and execute it all in 1 command
+
+ Using Yarn
+
+As a dev:
+  Publish to NPM:
+      npm login
+        -- NPM account is already created. Check skydrive for login details
+      npm publish .
+	-- cd to working directory. Need to check how it will work with typescript.
+
+  Publish to Yarn:
+
+
+  Using AWS SDK for Nodejs
+     AWS Lambda
+     AWS CloudWatch
+  
+  Using async/await in forEach does not work. Use for...of instead
+
+  
+
+  [
+    "us-east-2",
+    "us-east-1",
+    "us-west-1",
+    "us-west-2",
+    "ap-northeast-1",
+    "ap-northeast-2",
+    "ap-south-1",
+    "ap-southeast-1",
+    "ap-southeast-2",
+    "ca-central-1",
+    "cn-north-1",
+    "eu-central-1",
+    "eu-west-1",
+    "eu-west-2",
+    "eu-west-3",
+    "sa-east-1",
+    "us-gov-west-1"
+]
 
 
 

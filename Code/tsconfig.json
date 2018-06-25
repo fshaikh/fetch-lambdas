@@ -10,6 +10,7 @@
         "baseUrl": ".",
         "declaration": true,
         "declarationDir": "../types",
+        "strictNullChecks": false,
         "lib": [
             "dom",
             "es6"

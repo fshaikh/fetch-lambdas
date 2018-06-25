@@ -1,0 +1,38 @@
+[
+    {
+        "Name": "Region",
+        "Show": true
+    },
+    {
+        "Name": "Name",
+        "Show": true
+    },
+    {
+        "Name": "Last Modified",
+        "Show": true
+    },
+    {
+        "Name": "Last Invocation",
+        "Show": true
+    },
+    {
+        "Name": "Memory (MB)",
+        "Show": true
+    },
+    {
+        "Name": "Runtime",
+        "Show": true
+    },
+    {
+        "Name": "Timeout (seconds)",
+        "Show": true
+    },
+    {
+        "Name": "Code Size (MB)",
+        "Show": true
+    },
+    {
+        "Name": "Description",
+        "Show": true
+    }
+]

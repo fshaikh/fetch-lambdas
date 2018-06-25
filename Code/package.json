@@ -2,22 +2,35 @@
   "name": "fetch-lambdas",
   "version": "1.0.0",
   "description": "Fetches lambdas from all regions along with interesting metadata",
-  "main": "fetch-lambdas.js",
   "scripts": {
-    "build": "npm run build-ts",
-    "build-ts": "tsc"
+    "build-ts": "tsc",
+    "compile": "npm run build-ts",
+    "link": "npm link",
+    "unlink": "npm unlink",
+    "build": "npm run compile && npm run link"
+  },
+  "bin": {
+    "fetch-lambdas": "./dist/fetch-lambdas.js"
   },
   "keywords": [
     "aws",
-    "lambda"
+    "lambda",
+    "cli",
+    "node",
+    "typescript"
   ],
   "author": "Furqan Shaikh",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
+    "@types/commander": "^2.12.2",
     "@types/node": "^10.3.4",
+    "ts-node": "^6.1.1",
     "typescript": "^2.9.2"
   },
   "dependencies": {
-    "aws-sdk": "^2.259.1"
+    "aws-sdk": "^2.259.1",
+    "commander": "^2.15.1",
+    "csv-writer": "^1.0.0",
+    "moment": "^2.22.2"
   }
 }
