@@ -20,6 +20,7 @@ export default class LambdaService {
      * @param args - CLI Arguments
      */
     private createLambda;
+    private getLambdaData;
     /**
      * Gets params for passing to listFunctions API call to AWs Lambda
      */

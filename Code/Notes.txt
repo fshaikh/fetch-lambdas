@@ -69,8 +69,8 @@
                   Show error when accessKey is not provided - DONE
                   Show error when secretKey is not provided - DONE
                   Show error when sort has invalid column.
-           4. As a user, I should be able to fetch lambdas for all regions
-           5. As a user, I should be able to fetch lambdas for all regions with last invocation      
+           4. As a user, I should be able to fetch lambdas for all regions - DONE
+           5. As a user, I should be able to fetch lambdas for all regions with last invocation  - DONE     
            6. As a user, I should be able to see basic metadata in console
            7. As a user, I should be able to save in CSV - DONE
            8. As a user, I should be able to sort by a chosen column

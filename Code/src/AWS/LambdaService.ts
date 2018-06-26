@@ -32,34 +32,27 @@ import { LogStreamOrderByEnum } from '../Models/LogStreamOrderByEnum';
      * @param request Request object containing required config to be passed to AWS
      */
      public async fetchLamdas(request: FetchLambdaRequest): Promise<FetchLambdaResponse> {
-         return new Promise<FetchLambdaResponse>((resolve, reject) => {
+         return new Promise<FetchLambdaResponse>(async (resolve, reject) => {
             const regions = request.Regions;
             const args = request.Args;
             var response: FetchLambdaResponse = new FetchLambdaResponse();
             try{
+                const lambdaPromises = [];
                 // Enumerate each region and get lambda
-                
-                regions.forEach((region: string) => {
-                    const lambda: Lambda = this.createLambda(region, args);
-                    const params = this.getListFunctionsParams();
+                for (const region of regions) {
+                    const lambdaPromise = await this.getLambdaData(request, region, args);
+                    lambdaPromises.push(lambdaPromise);
+                }
 
-                   
-
-                    lambda.listFunctions(params, async (err: AWSError, data: Lambda.ListFunctionsResponse) => {
-                        if(err){
-                            console.log(`Error in fetching lambdas for : ${request.Regions}`);
-                            response.isSuccess = false;
-                            response.error = err.message;
+                // wait for all regions to either get resolved or rejected
+                Promise.all(lambdaPromises)
+                       .then((data) => {
+                            data.map((item) => {
+                                response.FunctionsData.push(...item);
+                            });
                             resolve(response);
-                        }else{
-                            const functions: FunctionList = data.Functions;
-                            const lamdasData = await this.parseFunctions(region, request, functions);
-                            response.FunctionsData.push(...lamdasData);
-                            resolve(response);
-                        }
-                    });
-                });
-            }catch(e){
+                       });
+            } catch(e){
                 response.isSuccess = false;
                 resolve(response);
             }
@@ -77,6 +70,25 @@ import { LogStreamOrderByEnum } from '../Models/LogStreamOrderByEnum';
             accessKeyId: args.AccessKey,
             secretAccessKey: args.SecretKey
         });
+     }
+
+     private async getLambdaData(request: FetchLambdaRequest, region: string, args: CLIArgs): Promise<LambdaData[]> {
+        return new Promise<LambdaData[]>((resolve, reject) => {
+            const lambda: Lambda = this.createLambda(region, args);
+            const params = this.getListFunctionsParams();
+            lambda.listFunctions(params, async (err: AWSError, data: Lambda.ListFunctionsResponse) => {
+                if(err){
+                    console.log(`Error in fetching lambdas for : ${region}`);
+                    resolve([]);
+                }else{
+                    const functions: FunctionList = data.Functions;
+                    const lamdasData = await this.parseFunctions(region, request, functions);
+                   
+                    resolve(lamdasData);
+                }
+            });
+        });
+        
      }
 
      /**
