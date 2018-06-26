@@ -8,6 +8,8 @@ exposed to outside world and thus you need to keep a tight leash on anything unw
 This begs the question: How do you cleanup “Dead” Lambdas? Use fetch-lambdas.
    fetch-lambda is a NPM package which enumerates your Lambda functions across all AWS regions and provides useful metadata,
 such as the function’s last modified time, its last invocation time and more. It can help identifying dead Lambda functions easily.
+Inspired by : https://medium.com/epsagon/the-curse-of-dead-lambda-functions-228bf812c10a
+
 
 ## Setup
 .. code-block:: bash
