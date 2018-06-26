@@ -24,6 +24,8 @@ Console:
 
 CSV:
 
+.. image:: https://github.com/fshaikh/fetch-lambdas/blob/master/CSV-output.JPG
+
 ## Usage
 .. code-block:: bash
 
