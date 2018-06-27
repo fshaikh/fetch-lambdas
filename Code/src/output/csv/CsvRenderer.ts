@@ -2,6 +2,8 @@ import RendererBase from "../RendererBase";
 import FetchLambdaResponse from "../../Models/FetchLambdaResponse";
 import CsvConfig from "../../Models/CsvConfig";
 import RenderRequest from "../../Models/RenderRequest";
+import CsvGenerator from "./CsvGenerator";
+import CsvRequest from "./CsvRequest";
 const createCsvWriter = require('csv-writer').createArrayCsvWriter;
 
 /**
@@ -14,19 +16,19 @@ export default class CsvRenderer extends RendererBase{
 
     public async render(request: RenderRequest): Promise<boolean> {
         const headers = this.getCsvColumns(request);
-        const csvWriter = createCsvWriter({
-            path: this._csvConfig.FileName,
-            header: headers
-        });
-         
-        const records = request.Rows.Rows;
-         
-        csvWriter.writeRecords(records)       // returns a promise
-            .then(() => {
-                console.log('...Done');
-            });
-
-            return true;
+        const csvGenerator: CsvGenerator = new CsvGenerator();
+        let csvRequest: CsvRequest = {
+             Path : this._csvConfig.FileName,
+             Columns : headers,
+             Rows: request.Rows.Rows
+        };
+        try{
+            const response = await csvGenerator.write(csvRequest);
+            return response;
+        }catch(e){
+            console.log(`Error in writing to CSV:`);
+            return false;
+        }
     }
 
     private getCsvColumns(request: RenderRequest){

@@ -3,10 +3,8 @@ import CLIArgs from "../models/CLIArgs";
 import getOutputFormatter from "../output/OutputFactory";
 import RenderRequest from "../Models/RenderRequest";
 import Columns from "../Models/Columns";
-import Column from "../Models/Column";
 import Rows from "../Models/Rows";
 import LambdaData from "../Models/LambdaData";
-import Row from "../Models/Row";
 import { getDaysAgoForDate, getDaysAgoForTimestamp } from "../formatters/DaysAgoFormatter";
 import { toMB } from "../formatters/SizeFormatter";
 const DefinedColumns = require('../../columns.json');
@@ -53,7 +51,7 @@ export default class OutputService{
             row.push(element.Region);
             row.push(element.Name);
             row.push(getDaysAgoForDate(element.LastModified));
-            row.push(getDaysAgoForTimestamp(element.LastInvocation));
+            row.push(this.getLastInvocationFormattedValue(element.LastInvocation));
             row.push(element.Memory.toString());
             row.push(element.Runtime);
             row.push(element.Timeout.toString());
@@ -64,5 +62,10 @@ export default class OutputService{
         });
 
         return rows;
+    }
+
+    private getLastInvocationFormattedValue(lastInvocation: string): string {
+        const formattedValue = getDaysAgoForTimestamp(lastInvocation);
+        return formattedValue === '' ? 'N/A (no invocations)': formattedValue;
     }
 }

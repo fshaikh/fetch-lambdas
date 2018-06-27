@@ -30,7 +30,6 @@
   "dependencies": {
     "aws-sdk": "^2.259.1",
     "commander": "^2.15.1",
-    "csv-writer": "^1.0.0",
     "moment": "^2.22.2"
   }
 }

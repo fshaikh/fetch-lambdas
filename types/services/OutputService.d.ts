@@ -5,4 +5,5 @@ export default class OutputService {
     private createRenderRequest;
     private createColumns;
     private createRows;
+    private getLastInvocationFormattedValue;
 }
