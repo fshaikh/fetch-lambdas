@@ -98,7 +98,7 @@
     Parsing Arguments:
     We will use commander npm package to validate and parse command line arguments. Commander provides -h help feature by default
 
-    node fetch-lambdas --accessKey=AKIAJZCW2NKVNFWQHLXQ --secretKey=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
+    node fetch-lambdas --accessKey= --secretKey=
 
 
 Packaging and Distribution:
