@@ -4,7 +4,7 @@ import CsvConfig from "../../Models/CsvConfig";
 import RenderRequest from "../../Models/RenderRequest";
 import CsvGenerator from "./CsvGenerator";
 import CsvRequest from "./CsvRequest";
-const createCsvWriter = require('csv-writer').createArrayCsvWriter;
+
 
 /**
  * Renderer for rendering output to CSV

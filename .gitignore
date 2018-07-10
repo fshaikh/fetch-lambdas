@@ -2,7 +2,7 @@
 .vscode/
 Code/node_modules/
 Code/dist/
-test.csv
+*.csv
 types/
 Code/src/test.ts
 
