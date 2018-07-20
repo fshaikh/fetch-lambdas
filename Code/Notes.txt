@@ -74,6 +74,8 @@
            6. As a user, I should be able to see basic metadata in console
            7. As a user, I should be able to save in CSV - DONE
            8. As a user, I should be able to sort by a chosen column
+	   9. As auser, I should be able to see progress
+	   	Use: https://github.com/sindresorhus/ora
            9. As a dev, I should be able to publish, update and automate to NPM
            10. As a dev, I should be able to publish, update and automate to Yarn
 
